@@ -7,22 +7,23 @@ import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import br.com.marco.agenda.adapter.AlunoAdapter;
+import br.com.marco.agenda.converter.AlunoConverter;
 import br.com.marco.agenda.dao.AlunoDAO;
 import br.com.marco.agenda.model.Aluno;
+import br.com.marco.agenda.task.AlunoEnvioTask;
+import br.com.marco.agenda.web.WebClient;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
@@ -59,6 +60,24 @@ public class ListaAlunosActivity extends AppCompatActivity {
         registerForContextMenu(listAlunos);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_lista_alunos, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.menu_lista_enviar:
+                new AlunoEnvioTask(this).execute();
+                break;
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
 
     private void carregaLista() {
         dao = new AlunoDAO(this);

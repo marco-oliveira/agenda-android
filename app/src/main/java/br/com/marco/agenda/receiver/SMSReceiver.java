@@ -48,7 +48,7 @@ public class SMSReceiver extends BroadcastReceiver {
 
         }
 
-        
+        dao.close();
 
     }
 }
