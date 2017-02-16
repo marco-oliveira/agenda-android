@@ -64,6 +64,16 @@ public class AlunoAdapter extends BaseAdapter{
         TextView campoTelefone = (TextView) view.findViewById(R.id.text_item_telefone);
         campoTelefone.setText(aluno.getTelefone());
 
+        TextView campoEndereco = (TextView) view.findViewById(R.id.text_item_endereco);
+        if (campoEndereco != null){
+            campoEndereco.setText(aluno.getEndereco());
+        }
+
+        TextView campoSite = (TextView) view.findViewById(R.id.text_item_site);
+        if (campoSite != null){
+            campoSite.setText(aluno.getSite());
+        }
+
         ImageView campoImagem = (ImageView) view.findViewById(R.id.list_item_foto);
         String urlPhoto = aluno.getCaminhoFoto();
 
