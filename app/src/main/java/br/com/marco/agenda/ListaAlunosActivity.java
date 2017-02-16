@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import br.com.marco.agenda.adapter.AlunoAdapter;
 import br.com.marco.agenda.dao.AlunoDAO;
 import br.com.marco.agenda.model.Aluno;
 
@@ -67,7 +68,9 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         listAlunos = (ListView) findViewById(R.id.lista_alunos);
 
-        ArrayAdapter<Aluno> adapter = new ArrayAdapter<Aluno>(this, android.R.layout.simple_list_item_1, alunos);
+        AlunoAdapter adapter = new AlunoAdapter(this, alunos);
+
+        // ArrayAdapter<Aluno> adapter = new ArrayAdapter<Aluno>(this, android.R.layout.simple_list_item_1, alunos);
         listAlunos.setAdapter(adapter);
     }
 
