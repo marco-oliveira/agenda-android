@@ -1,12 +1,13 @@
 package br.com.marco.agenda.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by marco on 21/02/17.
  */
 
-public class Prova {
+public class Prova implements Serializable {
 
     private String materia;
 
