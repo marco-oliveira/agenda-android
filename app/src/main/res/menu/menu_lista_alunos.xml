@@ -6,4 +6,10 @@
         android:title="Enviar"
         android:icon="@drawable/ic_enviar"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_provas_baixar"
+        android:title="Baixar"
+        android:icon="@drawable/ic_receber"
+        app:showAsAction="always"/>
 </menu>
