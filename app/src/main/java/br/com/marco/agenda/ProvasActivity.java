@@ -1,6 +1,9 @@
 package br.com.marco.agenda;
 
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,34 +24,43 @@ public class ProvasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_provas);
 
-        List<String> topicosPortugues = Arrays.asList("Sujeito", "Objeto Direto", "Objeto Indireto");
-        Prova portugues = new Prova("Portugues", "22/04/1983", topicosPortugues);
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
-        List<String> topicosMatematica = Arrays.asList("Trigonometria", "Equações de 2 grau");
-        Prova matematica = new Prova("Matematica", "23/04/1985", topicosMatematica);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        List<Prova> provas = Arrays.asList(portugues, matematica);
-        ArrayAdapter<Prova> adapter = new ArrayAdapter<Prova>(this, android.R.layout.simple_list_item_1, provas);
+        transaction.replace(R.id.frame_principal, new ListaProvasFragment());
 
-        ListView listaProvas = (ListView) findViewById(R.id.provas_lista);
-        listaProvas.setAdapter(adapter);
+        if (isModoPaisagem()){
+            transaction.replace(R.id.frame_secundario, new DetalhesProvasFragment());
+        }
 
-        listaProvas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        transaction.commit();
 
-                Prova prova = (Prova) parent.getItemAtPosition(position);
+    }
 
-                Toast.makeText(ProvasActivity.this, "Prova de "+ prova, Toast.LENGTH_SHORT).show();
+    private boolean isModoPaisagem() {
+        return getResources().getBoolean(R.bool.modoPaisagem);
+    }
 
-                Intent vaiParaDetalhes = new Intent(ProvasActivity.this, DetalhesProvaActivity.class);
+    public void selecionaProva(Prova prova) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (!isModoPaisagem()){
 
-                vaiParaDetalhes.putExtra("prova", prova);
+            DetalhesProvasFragment detalhesFragment = new DetalhesProvasFragment();
 
-                startActivity(vaiParaDetalhes);
+            Bundle parametros = new Bundle();
+            parametros.putSerializable("prova", prova);
+            detalhesFragment.setArguments(parametros);
 
-            }
-        });
+            FragmentTransaction tx = fragmentManager.beginTransaction();
+            tx.replace(R.id.frame_principal, detalhesFragment);
+            tx.addToBackStack(null);
+            tx.commit();
+        } else{
+            DetalhesProvasFragment detalheFragment =
+                    (DetalhesProvasFragment) fragmentManager.findFragmentById(R.id.frame_secundario);
 
+            detalheFragment.populaCamposCom(prova);
+        }
     }
 }

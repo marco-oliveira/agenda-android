@@ -75,8 +75,9 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 break;
 
             case R.id.menu_provas_baixar:
-                Intent vaiParaProvas = new Intent(ListaAlunosActivity.this, ProvasActivity.class);
+                Intent vaiParaProvas = new Intent(this, ProvasActivity.class);
                 startActivity(vaiParaProvas);
+                break;
         }
 
 
@@ -93,7 +94,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
         AlunoAdapter adapter = new AlunoAdapter(this, alunos);
 
-        // ArrayAdapter<Aluno> adapter = new ArrayAdapter<Aluno>(this, android.R.layout.simple_list_item_1, alunos);
         listAlunos.setAdapter(adapter);
     }
 
