@@ -1,4 +1,4 @@
-package br.com.marco.agenda;
+package br.com.marco.agenda.fragment;
 
 
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 
+import br.com.marco.agenda.R;
 import br.com.marco.agenda.model.Prova;
 
 public class DetalhesProvasFragment extends Fragment {

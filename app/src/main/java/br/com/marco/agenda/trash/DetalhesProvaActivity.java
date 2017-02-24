@@ -1,4 +1,4 @@
-package br.com.marco.agenda;
+package br.com.marco.agenda.trash;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 
+import br.com.marco.agenda.R;
 import br.com.marco.agenda.model.Prova;
 
 public class DetalhesProvaActivity extends AppCompatActivity {

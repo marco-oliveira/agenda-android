@@ -1,21 +1,14 @@
 package br.com.marco.agenda.receiver;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
-import java.io.Serializable;
-
-import br.com.marco.agenda.ListaAlunosActivity;
 import br.com.marco.agenda.R;
 import br.com.marco.agenda.dao.AlunoDAO;
 

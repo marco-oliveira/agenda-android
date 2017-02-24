@@ -1,10 +1,8 @@
-package br.com.marco.agenda;
+package br.com.marco.agenda.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +14,8 @@ import android.widget.Toast;
 import java.util.Arrays;
 import java.util.List;
 
+import br.com.marco.agenda.activity.ProvasActivity;
+import br.com.marco.agenda.R;
 import br.com.marco.agenda.model.Prova;
 
 /**

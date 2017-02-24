@@ -8,12 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
 
-import br.com.marco.agenda.ListaAlunosActivity;
 import br.com.marco.agenda.R;
 import br.com.marco.agenda.model.Aluno;
 

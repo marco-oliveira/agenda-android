@@ -1,4 +1,4 @@
-package br.com.marco.agenda;
+package br.com.marco.agenda.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -14,16 +14,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
+import br.com.marco.agenda.R;
 import br.com.marco.agenda.adapter.AlunoAdapter;
-import br.com.marco.agenda.converter.AlunoConverter;
 import br.com.marco.agenda.dao.AlunoDAO;
 import br.com.marco.agenda.model.Aluno;
 import br.com.marco.agenda.task.AlunoEnvioTask;
-import br.com.marco.agenda.web.WebClient;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 

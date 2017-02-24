@@ -1,4 +1,4 @@
-package br.com.marco.agenda;
+package br.com.marco.agenda.fragment;
 
 import android.location.Address;
 import android.location.Geocoder;

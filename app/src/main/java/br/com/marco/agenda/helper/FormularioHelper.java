@@ -2,12 +2,11 @@ package br.com.marco.agenda.helper;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
-import br.com.marco.agenda.FormularioActivity;
+import br.com.marco.agenda.activity.FormularioActivity;
 import br.com.marco.agenda.R;
 import br.com.marco.agenda.model.Aluno;
 

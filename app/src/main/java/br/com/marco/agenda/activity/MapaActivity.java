@@ -1,4 +1,4 @@
-package br.com.marco.agenda;
+package br.com.marco.agenda.activity;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -10,7 +10,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.google.android.gms.maps.SupportMapFragment;
+import br.com.marco.agenda.R;
+import br.com.marco.agenda.fragment.MapaFragment;
+import br.com.marco.agenda.gps.Localizador;
 
 public class MapaActivity extends AppCompatActivity {
 
