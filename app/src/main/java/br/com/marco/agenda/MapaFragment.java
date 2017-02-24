@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import br.com.marco.agenda.dao.AlunoDAO;
 import br.com.marco.agenda.model.Aluno;
@@ -51,6 +52,8 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
             }
         }
         dao.close();
+
+        new Localizador(getContext(), googleMap);
     }
 
     public LatLng pegaCordenadaDoEndereco(String endereco){
