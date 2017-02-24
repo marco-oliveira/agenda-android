@@ -25,6 +25,8 @@ import br.com.marco.agenda.model.Aluno;
 
 public class MapaFragment extends SupportMapFragment implements OnMapReadyCallback {
 
+    private GoogleMap mapa;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +37,7 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
     public void onMapReady(GoogleMap googleMap) {
         LatLng posicaoInicial = pegaCordenadaDoEndereco("Av Brasil sul, 5300, Anápolis, GO");
         if (posicaoInicial != null){
-            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(posicaoInicial, 17);
-            googleMap.moveCamera(update);
+            centralizaEm(posicaoInicial);
        }
 
         AlunoDAO dao = new AlunoDAO(getContext());
@@ -53,9 +54,14 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
         }
         dao.close();
 
-        new Localizador(getContext(), googleMap);
     }
 
+    public void centralizaEm(LatLng coordenada) {
+        if (mapa != null) {
+            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(coordenada, 17);
+            mapa.moveCamera(update);
+        }
+    }
     public LatLng pegaCordenadaDoEndereco(String endereco){
         Geocoder geocoder = new Geocoder(getContext());
         try {

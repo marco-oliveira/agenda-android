@@ -1,9 +1,12 @@
 package br.com.marco.agenda;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -21,9 +24,9 @@ import com.google.android.gms.maps.model.LatLng;
 public class Localizador implements GoogleApiClient.ConnectionCallbacks, LocationListener {
 
     private final GoogleApiClient client;
-    private final GoogleMap mapa;
+    private final MapaFragment mapaFragment;
 
-    public Localizador(Context context, GoogleMap mapa) {
+    public Localizador(Context context, MapaFragment mapaFragment) {
         client = new GoogleApiClient.Builder(context)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
@@ -31,7 +34,7 @@ public class Localizador implements GoogleApiClient.ConnectionCallbacks, Locatio
 
         client.connect();
 
-        this.mapa = mapa;
+        this.mapaFragment = mapaFragment;
     }
 
     @Override
@@ -40,6 +43,7 @@ public class Localizador implements GoogleApiClient.ConnectionCallbacks, Locatio
         request.setSmallestDisplacement(50);
         request.setInterval(1000);
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
 
         LocationServices.FusedLocationApi.requestLocationUpdates(client, request, this);
 
@@ -54,7 +58,6 @@ public class Localizador implements GoogleApiClient.ConnectionCallbacks, Locatio
     public void onLocationChanged(Location location) {
 
         LatLng cordenada = new LatLng(location.getLatitude(), location.getLongitude());
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(cordenada);
-        mapa.moveCamera(cameraUpdate);
+        mapaFragment.centralizaEm(cordenada);
     }
 }
