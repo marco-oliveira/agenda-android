@@ -22,7 +22,7 @@ public class InserirAlunoTask extends AsyncTask {
     protected Object doInBackground(Object[] params) {
 
         String json = new AlunoConverter().converterParaJsonCompleto(aluno);
-        new WebClient().insere(json);
+     //   new WebClient().insere(json);
         return null;
     }
 }
