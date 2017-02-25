@@ -1,4 +1,4 @@
-package br.com.marco.agenda.task;
+package br.com.marco.agenda.trash;
 
 import android.os.AsyncTask;
 
@@ -8,6 +8,8 @@ import br.com.marco.agenda.web.WebClient;
 
 /**
  * Created by marco on 24/02/17.
+ *
+ * NÃO UTILIZAR MAIS, SUBSTITUIDO PELA API RETROFIT
  */
 public class InserirAlunoTask extends AsyncTask {
     private Aluno aluno;

@@ -26,10 +26,12 @@ public class WebClient {
         return realizaRequisicao(json, endereco);
     }
 
-    public void insere(String json) {
+    /*
+     *NÃO PRECISA MAIS
+        public void insere(String json) {
         endereco = LOCALHOST+"api/aluno";
         realizaRequisicao(json, endereco);
-    }
+    }*/
 
     @Nullable
     private String realizaRequisicao(String json, String endereco) {

@@ -18,7 +18,10 @@ import br.com.marco.agenda.R;
 import br.com.marco.agenda.dao.AlunoDAO;
 import br.com.marco.agenda.helper.FormularioHelper;
 import br.com.marco.agenda.model.Aluno;
-import br.com.marco.agenda.task.InserirAlunoTask;
+import br.com.marco.agenda.retrofit.RetrofitInitializer;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FormularioActivity extends AppCompatActivity {
 
@@ -93,7 +96,20 @@ public class FormularioActivity extends AppCompatActivity {
 
 
                 dao.close();
-                new InserirAlunoTask(aluno).execute();
+               // new InserirAlunoTask(aluno).execute();
+                Call<Void> call = new RetrofitInitializer().getAlunoService().insere(aluno);
+
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
 
                 Toast.makeText(FormularioActivity.this, "Aluno "+ aluno.getNome()+ " Salvo!", Toast.LENGTH_SHORT).show();
                 finish();
