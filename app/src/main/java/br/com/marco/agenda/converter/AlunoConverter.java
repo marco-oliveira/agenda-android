@@ -20,9 +20,6 @@ public class AlunoConverter {
                 for (Aluno aluno : alunos){
                     js.object();
                     js.key("nome").value(aluno.getNome());
-                    js.key("endereco").value(aluno.getEndereco());
-                    js.key("telefone").value(aluno.getTelefone());
-                    js.key("site").value(aluno.getSite());
                     js.key("nota").value(aluno.getNota());
                     js.endObject();
                 }
@@ -33,6 +30,25 @@ public class AlunoConverter {
         }
 
 
+        return "";
+    }
+
+    public String converterParaJsonCompleto(Aluno aluno) {
+        JSONStringer js = new JSONStringer();
+
+        try {
+            js.object();
+            js.key("nome").value(aluno.getNome());
+            js.key("endereco").value(aluno.getEndereco());
+            js.key("telefone").value(aluno.getTelefone());
+            js.key("site").value(aluno.getSite());
+            js.key("nota").value(aluno.getNota());
+            js.endObject();
+
+          return  js.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return "";
     }
 }

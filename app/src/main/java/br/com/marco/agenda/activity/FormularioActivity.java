@@ -18,6 +18,7 @@ import br.com.marco.agenda.R;
 import br.com.marco.agenda.dao.AlunoDAO;
 import br.com.marco.agenda.helper.FormularioHelper;
 import br.com.marco.agenda.model.Aluno;
+import br.com.marco.agenda.task.InserirAlunoTask;
 
 public class FormularioActivity extends AppCompatActivity {
 
@@ -90,10 +91,14 @@ public class FormularioActivity extends AppCompatActivity {
                     dao.altera(aluno);
                 }
 
+
                 dao.close();
+                new InserirAlunoTask(aluno).execute();
 
                 Toast.makeText(FormularioActivity.this, "Aluno "+ aluno.getNome()+ " Salvo!", Toast.LENGTH_SHORT).show();
                 finish();
+
+
                 break;
         }
 

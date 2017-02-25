@@ -1,5 +1,7 @@
 package br.com.marco.agenda.web;
 
+import android.support.annotation.Nullable;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.HttpCookie;
@@ -8,16 +10,31 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
+import br.com.marco.agenda.model.Aluno;
+
 /**
  * Created by marco on 16/02/17.
  */
 public class WebClient {
 
+    private static final String LOCALHOST = "http://10.1.1.128:8080/";
+    private String endereco = "";
+
     public String post(String json) {
 
-        URL url = null;
+        endereco = LOCALHOST + "mobile";
+        return realizaRequisicao(json, endereco);
+    }
+
+    public void insere(String json) {
+        endereco = LOCALHOST+"api/aluno";
+        realizaRequisicao(json, endereco);
+    }
+
+    @Nullable
+    private String realizaRequisicao(String json, String endereco) {
         try {
-            url = new URL("http://localhost:8080/mobile");
+            URL url = new URL(endereco);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
 
