@@ -28,7 +28,7 @@ public class WebClient {
 
     /*
      *NÃO PRECISA MAIS
-        public void insere(String json) {
+        public void sincroniza(String json) {
         endereco = LOCALHOST+"api/aluno";
         realizaRequisicao(json, endereco);
     }*/
