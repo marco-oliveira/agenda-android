@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.UUID;
 
 import br.com.marco.agenda.model.Aluno;
 
@@ -19,13 +19,13 @@ import br.com.marco.agenda.model.Aluno;
 
 public class AlunoDAO extends SQLiteOpenHelper {
     public AlunoDAO(Context context) {
-        super(context, "Agenda", null, 2);
+        super(context, "Agenda", null, 4);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String sql = "CREATE TABLE Alunos (id INTEGER PRIMARY KEY, " +
+        String sql = "CREATE TABLE Alunos (id CHAR(36) PRIMARY KEY, " +
                 "nome TEXT NOT NULL, " +
                 "endereco TEXT, " +
                 "telefone TEXT, " +
@@ -43,7 +43,43 @@ public class AlunoDAO extends SQLiteOpenHelper {
             case 1:
                 sql = "ALTER TABLE Alunos ADD COLUMN caminhoFoto TEXT";
                 db.execSQL(sql);
+            case 2:
+                String criarNovaTabela = "CREATE TABLE Alunos_novo (id CHAR(36) PRIMARY KEY, " +
+                        "nome TEXT NOT NULL, " +
+                        "endereco TEXT, " +
+                        "telefone TEXT, " +
+                        "site TEXT, " +
+                        "nota REAL, " +
+                        "caminhoFoto TEXT);";
+                db.execSQL(criarNovaTabela);
+
+                String inserirDadosNovaTabela = "INSERT INTO Alunos_novo " +
+                        "(id, nome, endereco, telefone, site, nota, caminhoFoto) " +
+                        "SELECT id, nome, endereco, telefone, site, nota, caminhoFoto from " +
+                        "Alunos";
+                db.execSQL(inserirDadosNovaTabela);
+
+                String excluiTabela = "DROP TABLE Alunos";
+                db.execSQL(excluiTabela);
+
+                String alteraNomeTabela = "ALTER TABLE Alunos_novo " +
+                        "RENAME TO Alunos";
+                db.execSQL(alteraNomeTabela);
+                
+            case 3:
+                String buscaAlunos = "SELECT * FROM alunos";
+                Cursor c = db.rawQuery(buscaAlunos, null);
+                List<Aluno> alunos = populaAlunos(c);
+                String atualizaIdAluno = "UPDATE Alunos SET id=? WHERE id=?";
+                for (Aluno aluno:
+                     alunos) {
+                    db.execSQL(atualizaIdAluno, new String[]{geraUUid(), aluno.getId()});
+                }
         }
+    }
+
+    private String geraUUid() {
+        return UUID.randomUUID().toString();
     }
 
     @NonNull
@@ -63,8 +99,7 @@ public class AlunoDAO extends SQLiteOpenHelper {
 
         SQLiteDatabase database = getWritableDatabase();
         ContentValues dados = getDados(aluno);
-        long idAluno = database.insert("Alunos", null, dados);
-        aluno.setId(idAluno);
+        database.insert("Alunos", null, dados);
     }
 
 
@@ -92,12 +127,19 @@ public class AlunoDAO extends SQLiteOpenHelper {
 
         Cursor c = db.rawQuery("SELECT * FROM Alunos;", null);
 
+        List<Aluno> alunos = populaAlunos(c);
+
+        return alunos;
+    }
+
+    @NonNull
+    private List<Aluno> populaAlunos(Cursor c) {
         List<Aluno> alunos = new ArrayList<Aluno>();
 
         while (c.moveToNext()) {
             Aluno aluno = new Aluno();
 
-            aluno.setId(c.getLong(c.getColumnIndex("id")));
+            aluno.setId(c.getString(c.getColumnIndex("id")));
             aluno.setNome(c.getString(c.getColumnIndex("nome")));
             aluno.setEndereco(c.getString(c.getColumnIndex("endereco")));
             aluno.setTelefone(c.getString(c.getColumnIndex("telefone")));
