@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -62,6 +63,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
             }
         });
         registerForContextMenu(listAlunos);
+        buscaAlunos();
+
     }
 
     @Override
@@ -111,6 +114,12 @@ public class ListaAlunosActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+
+
+        carregaLista();
+    }
+
+    private void buscaAlunos() {
         Call<AlunoSync> call = new RetrofitInitializer().getAlunoService().lista();
 
         call.enqueue(new Callback<AlunoSync>() {
@@ -128,9 +137,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 Log.e("onFailure chamado", t.getMessage());
             }
         });
-
-
-        carregaLista();
     }
 
     @Override
@@ -186,12 +192,26 @@ public class ListaAlunosActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                dao = new AlunoDAO(ListaAlunosActivity.this);
+                Call<Void> call = new RetrofitInitializer().getAlunoService().deleta(aluno.getId());
 
-                dao.excluir(aluno);
-                dao.close();
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        dao = new AlunoDAO(ListaAlunosActivity.this);
 
-                carregaLista();
+                        dao.excluir(aluno);
+                        dao.close();
+
+                        carregaLista();
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Toast.makeText(ListaAlunosActivity.this, "Não pode excluir "+aluno.getNome(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
                 return false;
             }
