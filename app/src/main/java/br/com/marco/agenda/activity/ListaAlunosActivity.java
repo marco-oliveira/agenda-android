@@ -4,9 +4,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -34,6 +35,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private ListView listAlunos;
     private AlunoDAO dao;
+    private SwipeRefreshLayout swipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 Intent intentParaFormulario = new Intent(ListaAlunosActivity.this, FormularioActivity.class);
                 intentParaFormulario.putExtra("aluno", aluno);
                 startActivity(intentParaFormulario);
+            }
+        });
+
+        swipe = (SwipeRefreshLayout) findViewById(R.id.swipe_lista_aluno);
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                buscaAlunos();
             }
         });
 
@@ -130,11 +140,13 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 dao.sincroniza(alunosSync.getAlunos());
                 dao.close();
                 carregaLista();
+                swipe.setRefreshing(false);
             }
 
             @Override
             public void onFailure(Call<AlunoSync> call, Throwable t) {
                 Log.e("onFailure chamado", t.getMessage());
+                swipe.setRefreshing(false);
             }
         });
     }
