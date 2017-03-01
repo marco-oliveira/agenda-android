@@ -1,5 +1,6 @@
 package br.com.marco.agenda.retrofit;
 
+import br.com.marco.agenda.services.DispositivoService;
 import br.com.marco.agenda.services.AlunoService;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -30,5 +31,10 @@ public class RetrofitInitializer {
 
     public AlunoService getAlunoService() {
         return retrofit.create(AlunoService.class);
+    }
+
+    public DispositivoService getDispositivoService() {
+
+        return retrofit.create(DispositivoService.class);
     }
 }
