@@ -18,12 +18,17 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import br.com.marco.agenda.R;
 import br.com.marco.agenda.adapter.AlunoAdapter;
 import br.com.marco.agenda.dao.AlunoDAO;
 import br.com.marco.agenda.dto.AlunoSync;
+import br.com.marco.agenda.event.AtualizaListaAlunoEvent;
 import br.com.marco.agenda.model.Aluno;
 import br.com.marco.agenda.retrofit.RetrofitInitializer;
 import br.com.marco.agenda.task.AlunoEnvioTask;
@@ -74,6 +79,16 @@ public class ListaAlunosActivity extends AppCompatActivity {
         });
         registerForContextMenu(listAlunos);
         buscaAlunos();
+
+        EventBus eventBus = EventBus.getDefault();
+        eventBus.register(this);
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void atualizaListaAlunoEvent(AtualizaListaAlunoEvent event){
+
+        carregaLista();
 
     }
 
