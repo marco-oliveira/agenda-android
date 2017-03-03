@@ -41,6 +41,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     private ListView listAlunos;
     private AlunoDAO dao;
     private SwipeRefreshLayout swipe;
+    private EventBus eventBus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +81,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         registerForContextMenu(listAlunos);
         buscaAlunos();
 
-        EventBus eventBus = EventBus.getDefault();
-        eventBus.register(this);
+        eventBus = EventBus.getDefault();
+        //eventBus.register(this);
 
     }
 
@@ -140,8 +141,14 @@ public class ListaAlunosActivity extends AppCompatActivity {
         super.onResume();
 
 
-
+        eventBus.register(this);
         carregaLista();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        eventBus.unregister(this);
     }
 
     private void buscaAlunos() {
